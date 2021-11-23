@@ -25,7 +25,7 @@ class QRRecognizer:
         self.db = db
 
     # PUBLIC METHODS
-    def run(self)-> None:
+    def run(self)-> bool:
                 
         while self.is_running:
             _, frame = self.capture.read()
@@ -35,10 +35,10 @@ class QRRecognizer:
             if len(qr_data) == 0:
                 cv2.imshow("QR RECOGNITION", frame)
 
-                if len(self.thread_killers) == 0:
-                    killer = Thread(target=terminate_thread,args=(self.threads,))
-                    self.thread_killers.append(killer)
-                    killer.start()            
+                
+                killer = Thread(target=terminate_thread,args=(self.threads,))
+                self.thread_killers.append(killer)
+                killer.start()            
 
             else:
                 for obj in qr_data:
@@ -54,12 +54,10 @@ class QRRecognizer:
                     self.tts_thread.start()
                     
             if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-        
+               break
+       
         cv2.destroyAllWindows()
-
-        for killer in self.thread_killers:
-            killer.join()
+        return not self.is_running
 
     # PRIVATE METHODS
     def __get_qr_data(self,input_frame)-> List[Any]:
