@@ -1,5 +1,4 @@
 import pyttsx3
-from pyttsx3 import engine 
 
 class TTS:
     """
@@ -18,6 +17,8 @@ class TTS:
 
 
     def speak(self,message)-> None:
+        if self.engine._inLoop:
+            self.engine.endLoop()
         self.engine.say(message)
         self.engine.runAndWait()
         self.engine.stop()

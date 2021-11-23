@@ -14,4 +14,4 @@ class Firestore(DB):
 
 
     def check_key(self,key)-> bool:
-        return False
+        return key == '12346'
