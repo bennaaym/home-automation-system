@@ -9,10 +9,19 @@ class Serial:
     """
 
     # CONSTRUCTOR
-    def __init__(self,PORT:str = 'COM3',BAUD_RATE:int = 9600,TIMEOUT:float = .1) -> None:
+    def __init__(
+                    self,
+                    PORT:str = 'COM3',
+                    BAUD_RATE:int = 9600,
+                    TIMEOUT:float = 1,
+                    ENCODING:str = 'utf-8'
+
+                ) -> None:
+
         self.__port:str = PORT
         self.__baud_rate:int = BAUD_RATE
         self.__timeout:float = TIMEOUT
+        self.__encoding:str = ENCODING
         self.__serial:Any = None
         
     # PUBLIC METHODS
@@ -22,7 +31,7 @@ class Serial:
 
     def write(self,message)-> None:
         self.__connect()
-        self.__serial.write(bytes(message,'utf-8'))
+        self.__serial.write(bytes(message,self.__encoding))
     
 
     def close(self)-> None:
@@ -33,4 +42,5 @@ class Serial:
     def __connect(self)-> None :
         if not self.__serial : 
             self.__serial = serial.Serial(self.__port, self.__baud_rate, timeout = self.__timeout)
+            time.sleep(.001)
             
