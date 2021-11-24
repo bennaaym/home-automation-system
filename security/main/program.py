@@ -1,7 +1,9 @@
-from communication.serial_communication import Serial
+from threading import Thread
 import time
 import cv2 
-from db.firestore import Firestore
+from typing import List
+
+from communication.serial_communication import Serial
 from recognition.qr_recognizer import QRRecognizer
 from recognition.face_recognizer import FaceRecognizer
 from tts.messages import Messages
@@ -16,33 +18,44 @@ class Program:
     @classmethod
     def run(self):
         
-    #     CAM_MIN_DISTANCE = 20 #cm
-    #     CAM_MAX_DISTANCE = 50 #cm
-    #     _serial = Serial()
-
+        CAM_MIN_DISTANCE = 20 #cm
+        CAM_MAX_DISTANCE = 30 #cm
+        _serial = Serial()
         capture = cv2.VideoCapture(0)
-        db = Firestore()
-        qr_recognizer = QRRecognizer(capture,db)
-        face_recognizer = FaceRecognizer(capture,db)
-        tts = TTS()
+        qr_recognizer = QRRecognizer.get_instance(capture)
+        face_recognizer = FaceRecognizer.get_instance(capture)
+        tts = TTS.get_instance()
+        threads:List[Thread] = []
 
         while True:
-    #         byte = _serial.read()
-    #         distance = int.from_bytes(byte,byteorder='big')
 
-    #         if distance >= CAM_MIN_DISTANCE and distance <= CAM_MAX_DISTANCE:
-    #             # open cam 
-    #             # QR code detection
-    #             # Face recognition
-    #             break
-            
-            # QR authentication 
-            if qr_recognizer.run():
-                # Face authentication                
-                if face_recognizer.run():
-                    tts.speak(Messages.WELCOME_HOME)
-                    break
-                    
-            
+            byte = _serial.read()
+            distance = int.from_bytes(byte,byteorder='big')
+            print(f"distance: {distance}")
+
+            if distance >= CAM_MIN_DISTANCE and distance <= CAM_MAX_DISTANCE:
                 
-            
+                threads.append(Thread(target = tts.speak, args=(Messages.SHOW_QR_CODE,)))
+                threads[-1].start()
+                
+                # QR authentication 
+                user = qr_recognizer.run()
+                if user:
+                    # Face authentication                
+                    if face_recognizer.run(user):
+                        _serial.write('180')
+                        tts.speak(Messages.WELCOME_HOME)
+                        time.sleep(5)
+                        _serial.write('0')
+                        tts.speak(Messages.DOOR_CLOSE)                        
+
+
+                qr_recognizer.reset()
+                face_recognizer.reset()
+                distance = -1
+            time.sleep(1)
+
+    
+       
+
+        
