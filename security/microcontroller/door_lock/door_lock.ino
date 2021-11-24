@@ -1,16 +1,32 @@
+/**
+  Actuator : SG90 Mini Servo
+  Pins: 
+    Lock : 9
+**/
 #include <Servo.h>  
-
 Servo lockServo;
 const short LOCK_PIN = 9;
 int lockAngle = 0;
 
 
-const short TRIG_PIN = 12; // Trigger Pin of Ultrasonic Sensor
-const short ECHO_PIN = 13; // Echo Pin of Ultrasonic Sensor
-const int BAUD_RATE = 9600;
+/**
+  Sensor: HC-SR04
+  Pins
+    Trigger : 12
+    Echo : 13 
+**/
+const short TRIG_PIN = 12;
+const short ECHO_PIN = 13;
 int duration = -1;
 int distance = -1;
 
+/**
+  Communication : Serial Port
+  Baud rate : 9600
+**/
+const int BAUD_RATE = 9600;
+
+// init
 void setup() 
 {
    lockServo.attach(LOCK_PIN);
@@ -22,6 +38,7 @@ void setup()
 void loop() 
 {  
 
+    // actively checking if there is a received message from the python script
     if(Serial.available() > 0)
     {
       lockAngle = Serial.parseInt();
