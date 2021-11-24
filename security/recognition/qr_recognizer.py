@@ -32,12 +32,12 @@ class QRRecognizer:
     # PRIVATE CONSTRUCTOR 
     def __init__(self,capture)-> None:
 
-        # checks if there is an existing instance of Firestore
+        # checks if there is an existing instance of QRRecognizer
         if QRRecognizer.__instance:
             raise Exception("Singleton cannot be instantiated more than once")
 
         else: 
-            self.capture = capture
+            self.__capture = capture
             self.__tts = TTS.get_instance()
             self.__tts_thread = None
             self.__threads:List[Thread] = []
@@ -48,12 +48,18 @@ class QRRecognizer:
             QRRecognizer.__instance = self
 
     # PUBLIC METHODS
+    def reset(self)-> None:
+        self.__is_running = True
+        self.__user = None
+        self.__tts_thread = None
+
+
     def run(self)-> Union[User,None]:
                 
         while self.__is_running:
 
             # gets current frame from the video stream
-            _, frame = self.capture.read()
+            _, frame = self.__capture.read()
             
             # decodes qr code if any
             qr_data = self.__get_qr_data(frame)

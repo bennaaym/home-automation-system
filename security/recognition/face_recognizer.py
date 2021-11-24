@@ -1,41 +1,73 @@
 from typing import List
 import face_recognition
 import cv2
-import os
-import glob
 import numpy as np
+import urllib
 from threading import Thread
-from db.db import DB
-from recognition.util import terminate_thread
+from user.user import User
 from tts.text_to_speech import TTS
 from tts.messages import Messages
 
 class FaceRecognizer:
     """
     Detect and validate the user's face
+    This class uses Singleton design pattern
     """
+
+    # SINGLETON INSTANCE
+    __instance = None
+
+    @staticmethod
+    def get_instance(capture):
+
+        # checks if there is an existing instance of QRRecognizer
+        if FaceRecognizer.__instance == None:
+            FaceRecognizer.__instance = FaceRecognizer(capture)
+
+        return FaceRecognizer.__instance 
+
+
+
     # CONSTRUCTOR
-    def __init__(self,capture,db:DB) -> None:
-        self.__capture = capture
-        self.__is_running = True
-        self.known_face_encodings = []
-        self.known_face_names = []
-        self.frame_resizing = 0.2  # Resize frame for a higher speed
-        self.__db = db
-        self.__tts = TTS()
-        self.__threads:List[Thread] = []
+    def __init__(self,capture) -> None:
+
+        # checks if there is an existing instance of FaceRecognizer
+        if FaceRecognizer.__instance:
+            raise Exception("Singleton cannot be instantiated more than once")
+
+        else:
+            self.__capture = capture
+            self.__is_running = True
+            self.__known_face_encodings = []
+            self.__known_face_names = []
+            self.__frame_resizing = 0.2
+            self.__tts = TTS.get_instance()
+            self.__threads:List[Thread] = []
+            self.counter = -1
+            FaceRecognizer.__instance = self
 
 
 
     # PUBLIC METHODS
-    def run(self)-> bool:
-        # Encode faces from a folder
-        self.__load_encoding_images("security/recognition/images/")
-        counter = 20
-        while self.__is_running or counter != 0:
-            _, frame = self.__capture.read()
+    def reset(self)-> None:
+        self.__is_running =True
+        self.__known_face_encodings = []
+        self.__known_face_names = []
+        self.counter = -1
+        self.__threads.clear()
+
+    def run(self,user:User)-> bool:
+
+        # encodes user face
+        self.__image_encoding(user)
+
+        while self.__is_running or self.counter > 0 :
             
-            # Detect Faces
+            self.counter -= 1
+            
+            _, frame = self.__capture.read()
+
+            # detect faces
             face_locations, face_names = self.__detect_known_faces(frame)
         
             for face_loc, name in zip(face_locations, face_names):
@@ -48,76 +80,75 @@ class FaceRecognizer:
                     self.__threads.append(thread)
                     thread.start()
 
-
             cv2.imshow('FACE RECOGNITION',frame)
-            counter -=1
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
         
+
         cv2.destroyAllWindows()
+
+        for thread in self.__threads:
+            thread.join()
+        
         return not self.__is_running
 
+
     # PRIVATE METHODS
-    def __load_encoding_images(self, images_path):
-        """
-        Load encoding images from path
-        :param images_path:
-        :return:
-        """
-        # Load Images
-        images_path = glob.glob(os.path.join(images_path, "*.*"))
-        print(images_path)
+    def __image_encoding(self,user):
 
-        print("{} encoding images found.".format(len(images_path)))
+        # load user picture from the cloud
+        img = self.__url_to_image(user.picture)
+            
+        # get encoding
+        rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img_encoding = face_recognition.face_encodings(rgb_img)[0]
 
-        # Store image encoding and names
-        for img_path in images_path:
-            img = cv2.imread(img_path)
-            rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        # stores user name and image encoding
+        self.__known_face_encodings.append(img_encoding)
+        self.__known_face_names.append(user.name)
 
-            # Get the filename only from the initial file path.
-            basename = os.path.basename(img_path)
-            (filename, _) = os.path.splitext(basename)
-            # Get encoding
-            img_encoding = face_recognition.face_encodings(rgb_img)[0]
 
-            # Store file name and file encoding
-            self.known_face_encodings.append(img_encoding)
-            self.known_face_names.append(filename)
-        print("Encoding images loaded")
+    def __url_to_image(self,url):
+
+        with urllib.request.urlopen(url) as response:
+            image = np.asarray(bytearray(response.read()), dtype="uint8")
+            image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+
+        return image
 
     def __detect_known_faces(self, frame):
-        small_frame = cv2.resize(frame, (0, 0), fx=self.frame_resizing, fy=self.frame_resizing)
-        # Find all the faces and face encodings in the current frame of video
-        # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
+        small_frame = cv2.resize(frame, (0, 0), fx=self.__frame_resizing, fy=self.__frame_resizing)
+
+        # finds all the faces and face encodings in the current frame of video
+        # converts the image from BGR color to RGB color 
         rgb_small_frame = cv2.cvtColor(small_frame, cv2.COLOR_BGR2RGB)
         face_locations = face_recognition.face_locations(rgb_small_frame)
         face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
 
         face_names = []
         for face_encoding in face_encodings:
-            # See if the face is a match for the known face(s)
-            matches = face_recognition.compare_faces(self.known_face_encodings, face_encoding)
+            # sees if the face is a match for the known face(s)
+            matches = face_recognition.compare_faces(self.__known_face_encodings, face_encoding)
             name = "Unknown"
 
-            # If a match was found in known_face_encodings, just use the first one.
+            # if a match was found in known_face_encodings, just use the first one.
             if True in matches:
                 first_match_index = matches.index(True)
-                name = self.known_face_names[first_match_index]
+                name = self.__known_face_names[first_match_index]
 
 
-            # Or instead, use the known face with the smallest distance to the new face
+            # or instead, use the known face with the smallest distance to the new face
             else:
-                face_distances = face_recognition.face_distance(self.known_face_encodings, face_encoding)
+                face_distances = face_recognition.face_distance(self.__known_face_encodings, face_encoding)
                 best_match_index = np.argmin(face_distances)
                 if matches[best_match_index]:
-                    name = self.known_face_names[best_match_index]
+                    name = self.__known_face_names[best_match_index]
 
-            face_names.append(name)
+            face_names.append(name.capitalize())
 
-        # Convert to numpy array to adjust coordinates with frame resizing quickly
+        # converts to numpy array to adjust coordinates with frame resizing quickly
         face_locations = np.array(face_locations)
-        face_locations = face_locations / self.frame_resizing
+        face_locations = face_locations / self.__frame_resizing
         return face_locations.astype(int), face_names
 
 
@@ -126,4 +157,5 @@ class FaceRecognizer:
             self.__tts.speak(Messages.FACE_NOT_RECOGNIZED)
         else:
             self.__is_running = False
+            self.counter = 10
             self.__tts.speak(f"{Messages.FACE_RECOGNIZED}, Hi! {name}")
