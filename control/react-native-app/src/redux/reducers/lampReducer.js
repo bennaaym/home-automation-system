@@ -11,14 +11,17 @@ const initialState = {
 function lampReducer(lamps= initialState,action){
 
     const {type, payload} = action;
+    let newState;
 
     switch (type) { 
         case actionTypes.GET_KITCHEN_LAMP_STATE:
-            lamps.kitchenLamp = payload
-            return lamps
+            newState = {...lamps}
+            newState.kitchenLamp = payload
+            return newState
         case actionTypes.GET_LIVINGROOM_LAMP_STATE:
-            lamps.livingRoomLamp = payload
-           return lamps
+            newState = {...lamps}
+            newState.livingRoomLamp = payload
+            return newState
         case actionTypes.SWITCH_LIGHT: 
             return {payload,...lamps}
         default:

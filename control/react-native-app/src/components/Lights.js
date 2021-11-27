@@ -22,7 +22,7 @@ const Lights = () => {
   useEffect(() => {
     dispatch(getLampState(1,channelNo));
     dispatch(getLampState(2,channelNo));
-  });
+  },[state => state.lampReducer]);
 
   useEffect(() => {
     console.log(kitchenLamp);

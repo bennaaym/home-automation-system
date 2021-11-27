@@ -10,8 +10,9 @@ function temperatureReducer(temperatureSensor= initialState,action){
 
     switch (type) { 
         case actionTypes.GET_TEMPERATURE:
-            temperatureSensor.temperature = payload
-            return temperatureSensor
+            const newState = {...temperatureSensor}
+            newState.temperature = payload
+            return newState
         default:
             return temperatureSensor;
       }
