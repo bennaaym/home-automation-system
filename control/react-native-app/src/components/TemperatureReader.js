@@ -4,20 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import React  from 'react';
 import {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
-import { getTemperature } from '../redux/actions/temperature';
-
-const channelNo = "1580471";
-const apiWriteKey = "E1IEL3E8446RN0I8";
 
 
 const TemperatureReader = () => {
 
-  const dispatch = useDispatch();
   const temperature = useSelector(state => state.temperatureReducer.temperature)
-  
-  useEffect(() => {
-    dispatch(getTemperature(3,channelNo));
-  });
 
   useEffect(() => {
     console.log(temperature);
