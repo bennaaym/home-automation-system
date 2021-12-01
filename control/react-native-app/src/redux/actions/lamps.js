@@ -22,8 +22,9 @@ export const controlLight = (channelNo,data) => async (dispatch) => {
 
 export const getLampState = (lampNo,channelNo) => async (dispatch) => {
     try {
+      const no = parseInt(lampNo)
       const res = await apiServices.getLastState(lampNo,channelNo);
-      switch (lampNo) {
+      switch (no) {
           case 1:
               dispatch({
                     type: actionTypes.GET_KITCHEN_LAMP_STATE,

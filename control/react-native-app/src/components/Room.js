@@ -1,21 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
+import axios from 'axios';
 import React  from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { color } from 'react-native-reanimated';
-import Room from './src/components/Room';
+import Window from './Window';
+import Lamp from './Lamp'
+import TemperatureReader from './TemperatureReader';
 
-const channelNo = "1580471";
-const apiWriteKey = "E1IEL3E8446RN0I8";
 
-export default function App() {
+const Room = ({name,lampNo,windowNo,color}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Home automation app</Text>
-        <View style={styles.roomContainer}>
-          <Room name="kitchen" lampNo="1" windowNo="1" color="red" />
-          <Room name="Living Room" lampNo="2" color="#007bff" />
-        </View>
+      <Text style={styles.title}>{name}</Text>
+        <Lamp lampNo={lampNo} color={color}/>
+        <Window windowNo={windowNo}/> 
+        <TemperatureReader />
       <StatusBar style="auto" />
     </View>
   );
@@ -24,7 +24,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 12,
+    marginLeft: 10,
+    borderColor: "#000",
+    padding:12,
+    borderWidth:3,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -34,10 +37,7 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     color: '#000',
     margin: 10
-  },
-  roomContainer:{
-    flexDirection: 'row',
   }
 });
 
-
+export default Room ;

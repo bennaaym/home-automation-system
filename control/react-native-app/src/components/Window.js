@@ -13,19 +13,19 @@ const headers = {
     'Content-Type': 'application/json',
   }
 
-const Windows = () => {
-
+const Window = ({windowNo}) => {
   const dispatch = useDispatch();
-  const kitchenWindow = useSelector(state => state.servoReducer.kitchenWindow)
-  const LRWindow = useSelector(state => state.servoReducer.livingRoomWindow)
+  const state = windowNo == 1 ? state => state.servoReducer.kitchenWindow : 
+  (windowNo == 2 ? state => state.servoReducer.livingRoomWindow:null) 
+  const window = (windowNo != undefined) ? useSelector(state) : null;
 
   useEffect(() => {
-    dispatch(getWindowState(1,channelNo));
+    if(windowNo != undefined)dispatch(getWindowState(windowNo,channelNo));
     //dispatch(getWindowState(2,channelNo));
   });
 
   useEffect(() => {
-    console.log(kitchenWindow);
+    console.log(window);
     //console.log(LRWindow)
   })
 
@@ -33,9 +33,10 @@ const Windows = () => {
   const switchWindow = (WindowNo) => {
       let date = new Date() ;
       let data;
-      switch (WindowNo) {
+      const no = parseInt(windowNo);
+      switch (no) {
         case 1:
-          if(kitchenWindow == 0){
+          if(window == 0){
             data = 
             {
                 write_api_key: apiWriteKey,
@@ -45,7 +46,7 @@ const Windows = () => {
                     }
                   ]
               }
-            }else if(kitchenWindow == 180){
+            }else if(window == 180){
               data = 
               {
                   write_api_key: apiWriteKey,
@@ -58,7 +59,7 @@ const Windows = () => {
             }
           break;
         case 2:
-          if(LRWindow == 0){
+            if(window == 0){
             data = 
             {
                 write_api_key: apiWriteKey,
@@ -68,7 +69,7 @@ const Windows = () => {
                     }
                   ]
               }
-            }else if(LRWindow == 180){
+            }else if(window == 180){
               data = 
               {
                   write_api_key: apiWriteKey,
@@ -83,17 +84,20 @@ const Windows = () => {
           break;
       }
     dispatch(controlWindow(channelNo,data))
-    dispatch(getWindowState(1,channelNo));
+    dispatch(getWindowState(windowNo,channelNo));
     //dispatch(getWindowState(2,channelNo));
   }
 
   return (
-      <View>
-        <Text style={styles.subtitle}> Windows </Text>
-        <View style={styles.buttonGroup}>
-          <AppButton onPress={() => {switchWindow(1)}} title ={`${kitchenWindow==180?'Close':'Open'}`} color="#FF876E" textColor="#000" />
-        </View>
-    </View>
+     (window != null)?(      
+        <View>
+            <Text style={styles.subtitle}> Windows </Text>
+            <View style={styles.buttonGroup}>
+                <AppButton onPress={() => {switchWindow(windowNo)}} 
+                title ={`${window==180?'Close':'Open'}`} color="#FF876E" textColor="#000" />     
+            </View>
+        </View>)
+    :null
   );
 }
 
@@ -113,4 +117,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Windows;
+export default Window;

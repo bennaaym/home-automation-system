@@ -13,29 +13,28 @@ const headers = {
     'Content-Type': 'application/json',
   }
 
-const Lights = () => {
-
+const Lamp = ({lampNo,color}) => {
   const dispatch = useDispatch();
-  const kitchenLamp = useSelector(state => state.lampReducer.kitchenLamp)
-  const LRLamp = useSelector(state => state.lampReducer.livingRoomLamp)
+  const state = lampNo == 1 ? state => state.lampReducer.kitchenLamp : 
+  (lampNo == 2 ? state => state.lampReducer.livingRoomLamp:null) 
+  const Lamp = (state!=null) ? useSelector(state) : null;
 
   useEffect(() => {
-    dispatch(getLampState(1,channelNo));
-    dispatch(getLampState(2,channelNo));
+    dispatch(getLampState(lampNo,channelNo));
   },[state => state.lampReducer]);
 
   useEffect(() => {
-    console.log(kitchenLamp);
-    console.log(LRLamp)
+    console.log(Lamp);
   })
 
   //turning lamps off and on
-  const switchLight = (lampNo) => {
+  const switchLight = () => {
+      const no = parseInt(lampNo)
       let date = new Date() ;
       let data;
-      switch (lampNo) {
+      switch (no) {
         case 1:
-          if(kitchenLamp == 0){
+          if(Lamp == 0){
             data = 
             {
                 write_api_key: apiWriteKey,
@@ -45,7 +44,7 @@ const Lights = () => {
                     }
                   ]
               }
-            }else if(kitchenLamp == 1){
+            }else if(Lamp == 1){
               data = 
               {
                   write_api_key: apiWriteKey,
@@ -58,7 +57,7 @@ const Lights = () => {
             }
           break;
         case 2:
-          if(LRLamp == 0){
+          if(Lamp == 0){
             data = 
             {
                 write_api_key: apiWriteKey,
@@ -68,7 +67,7 @@ const Lights = () => {
                     }
                   ]
               }
-            }else if(LRLamp == 1){
+            }else if(Lamp == 1){
               data = 
               {
                   write_api_key: apiWriteKey,
@@ -83,8 +82,7 @@ const Lights = () => {
           break;
       }
     dispatch(controlLight(channelNo,data))
-    dispatch(getLampState(1,channelNo));
-    dispatch(getLampState(2,channelNo));
+    dispatch(getLampState(lampNo,channelNo));
   }
 
   const turnOffLights = () => {
@@ -107,8 +105,7 @@ const Lights = () => {
       <View>
         <Text style={styles.subtitle}> Lights </Text>
         <View style={styles.buttonGroup}>
-          <AppButton onPress={() => {switchLight(1)}} title ={`${kitchenLamp==1?'off':'on'}`} color="#007bff" />
-          <AppButton onPress={() => {switchLight(2)}} title={`${LRLamp==1?'off':'on'}`}color="red" />
+          <AppButton onPress={() => {switchLight(lampNo)}} title ={`${Lamp==1?'off':'on'}`} color={color} />
           <AppButton onPress={turnOffLights} textColor="#000" title="Lights off" color="#ccc" />
         </View>
     </View>
@@ -131,7 +128,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Lights;
-
-
-
+export default Lamp;

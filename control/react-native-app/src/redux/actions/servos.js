@@ -22,8 +22,10 @@ export const controlWindow = (channelNo,data) => async (dispatch) => {
 
 export const getWindowState = (windowNo,channelNo) => async (dispatch) => {
     try {
-      const res = await apiServices.getLastState(windowNo+3,channelNo);
-      switch (windowNo) {
+      const no = parseInt(windowNo); 
+      const res = await apiServices.getLastState(no+3,channelNo);
+     
+      switch (no) {
           case 1:
               dispatch({
                     type: actionTypes.GET_KITCHEN_WINDOW_STATE,
