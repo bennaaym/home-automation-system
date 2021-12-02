@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
 import React  from 'react';
 import { controlLight,getLampState } from './actions/lamps';
 import { controlWindow,getWindowState } from "./actions/servos";
+import useThingSpeak from '../hooks/useThingSpeak';
 
 const channelNo = "1580471";
 const apiWriteKey = "E1IEL3E8446RN0I8";
@@ -64,12 +64,12 @@ export function switchLight (lampNo,lampState,dispatch){
           default:
             break;
         }
-        dispatch(getLampState(lampNo,channelNo));
+        
         dispatch(controlLight(channelNo,data))
+        dispatch(getLampState(lampNo,channelNo));
     
     
 }
-
 
 //turning Windows off and on
 export function switchWindow(windowNo,windowState,dispatch){

@@ -13,7 +13,7 @@ const Window = ({windowNo}) => {
   (windowNo == 2 ? state => state.servoReducer.livingRoomWindow:null) 
 
   const window = (windowNo != undefined) ? useSelector(state) : null;
-  useThingSpeak(null,windowNo)
+  //useThingSpeak(null,windowNo)
 
   useEffect(() => {
     console.log(window);

@@ -15,8 +15,8 @@ const Lamp = ({lampNo,color}) => {
   const state = lampNo == 1 ? state => state.lampReducer.kitchenLamp : 
   (lampNo == 2 ? state => state.lampReducer.livingRoomLamp:null) 
   const Lamp = (state != null) ? useSelector(state) : null;
-  
-  useThingSpeak(lampNo)
+
+ // useThingSpeak(lampNo)
   
   useEffect(() => {
     console.log(Lamp);
