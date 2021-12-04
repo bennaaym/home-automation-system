@@ -11,7 +11,6 @@ export const controlWindow = (channelNo,data) => async (dispatch) => {
             type: actionTypes.SWITCH_WINDOW,
             payload: data
         })  
-        alert(data.updates[0].field4 == 0? "window closed" : "window opened")
         return Promise.resolve(res.data);   
     } catch (error) {
         console.log(error);

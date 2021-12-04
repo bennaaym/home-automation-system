@@ -1,35 +1,41 @@
 import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
 import React  from 'react';
+import { useSelector } from 'react-redux';
+import { getLampStateExpression } from '../redux/crud';
 import { Icon,Badge } from 'react-native-elements'
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { Switch } from 'react-native';
 import Window from './Window';
 import Lamp from './Lamp'
 import TemperatureReader from './TemperatureReader';
 import useThingSpeak from '../hooks/useThingSpeak';
-import { roomWidgetStyle } from '../styles/HomeStyle';
+import { roomWidgetStyle,roomWidgetLightOn } from '../styles/HomeStyle';
 
-const RoomWidget = ({name,lampNo,windowNo,color,icon}) => {
+const RoomWidget = ({name,lampNo,windowNo,devices,icon,props}) => {
   useThingSpeak(lampNo,windowNo)
+  const {navigation} = props;
+  const Lamp = (getLampStateExpression(lampNo) != null) ? useSelector(getLampStateExpression(lampNo) ) : null;
+  console.log("lamp no =",lampNo," is ",Lamp)
+  const widgetStyle = Lamp == 1 ? StyleSheet.compose(roomWidgetLightOn.container,roomWidgetStyle.container ):
+  StyleSheet.compose(roomWidgetStyle.lightOff,roomWidgetStyle.container);
   return (
-    <View style={roomWidgetStyle.container}>
+    <TouchableOpacity style={widgetStyle} onPress={()=>{navigation.navigate('Room',{name: name,lampNo: lampNo,windowNo: windowNo,devices: devices})}}>
       <View style={roomWidgetStyle.topPart}>
       <Icon
             name={icon}
             type='font-awesome-5'
-            color='#1A00D7'
+            color={`${Lamp == 1 ?'#E3EBFF':'#4392F1'}`}
         />
-        <Badge
-            status="error"
-            badgeStyle={{width:10,height:10}}
-            containerStyle={{ position: 'absolute',top: 17, right: 15}}
-        />
+        {lampNo?<Switch value={Lamp == 1 ? true : false} thumbColor={Lamp == 1 ? "#5BEC5B" : "#f4f3f4"} trackColor={{ false: "#767577", true: "#C2FFC2" }}/>:
+          ""
+        }
       </View>
       <View style={roomWidgetStyle.bottomPart}>
-          <Text style={roomWidgetStyle.room}>{name}</Text>
-          <Text style={roomWidgetStyle.state}>closed</Text>
+          <Text style={Lamp == 1 ? roomWidgetLightOn.room : roomWidgetStyle.room}>{name}</Text>
+          <Text style={Lamp == 1 ? roomWidgetLightOn.state :roomWidgetStyle.state}>{Lamp == 1 ? "On" : (Lamp == 0 ? "Off" : "")}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

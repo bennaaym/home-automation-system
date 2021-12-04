@@ -1,44 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
-import React  from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
-import { color } from 'react-native-reanimated';
-import Window from './Window';
-import Lamp from './Lamp'
-import TemperatureReader from './TemperatureReader';
-import useThingSpeak from '../hooks/useThingSpeak';
+import React,{useEffect, useState}  from 'react';
+import Banner from '../../utils/Banner';
+import { roomStyles } from '../../styles/RoomStyle';
+import { StyleSheet, Text, View, Button,StatusBar, TouchableOpacity, ScrollView,SafeAreaView } from 'react-native';
+import DeviceWidget from '../../components/DeviceWidget';
+import TemperatureReader from '../../components/TemperatureReader';
+import useThingSpeak from '../../hooks/useThingSpeak';
+import rooms from '../../variables/Rooms.json'
 
 
-const Room = ({name,lampNo,windowNo,color}) => {
+const Room = ({route}) => {
+  const {name,lampNo,windowNo=null,devices=null} = route.params
+  console.log(devices)
   useThingSpeak(lampNo,windowNo)
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{name}</Text>
-        <Lamp lampNo={lampNo} color={color}/>
-        <Window windowNo={windowNo}/> 
-        <TemperatureReader />
-      <StatusBar style="auto" />
+    <View style={roomStyles.container} >
+      <Banner title={name} description="3 devices connected" />
+        <ScrollView style={roomStyles.widgetContainer} horizontal={true}  >
+          {devices?(devices.map((item) => {       
+            return(<DeviceWidget key={item.id} icon={item.icon} deviceNo={item.deviceNo} type={item.type}/>)
+          })):""}
+        </ScrollView>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginLeft: 10,
-    borderColor: "#000",
-    padding:12,
-    borderWidth:3,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  title :{
-    fontSize: 16,
-    fontWeight:'bold',
-    color: '#000',
-    margin: 10
-  }
-});
 
 export default Room ;

@@ -144,4 +144,16 @@ export const turnOffLights = (dispatch) => {
     dispatch(controlLight(channelNo,data))
     dispatch(getLampState(1,channelNo));
     dispatch(getLampState(2,channelNo));
-  }
+}
+
+export const getLampStateExpression = (lampNo) => {
+  const state = lampNo == 1 ? state => state.lampReducer.kitchenLamp : 
+  (lampNo == 2 ? state => state.lampReducer.livingRoomLamp:null) 
+  return state;
+}
+
+export const getWindowStateExpression = (windowNo) => {
+  const state = windowNo == 1 ? state => state.servoReducer.kitchenWindow : 
+  (windowNo == 2 ? state => state.servoReducer.livingRoomWindow:null) 
+  return state;
+}

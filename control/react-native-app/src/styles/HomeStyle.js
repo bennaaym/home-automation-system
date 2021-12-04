@@ -30,9 +30,10 @@ export const roomWidgetStyle = StyleSheet.create({
     marginRight:12,
     marginBottom:12,
     width: '45%',
-    backgroundColor: "#fff",
     borderTopLeftRadius: 30,
     borderBottomRightRadius:30,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius:5,
     height: 150,
     shadowColor: '#ccc',
     shadowOffset: {width: -5, height: 4},
@@ -40,22 +41,42 @@ export const roomWidgetStyle = StyleSheet.create({
     shadowRadius: 3,
   },
   title: {
-    fontSize: 15
+    fontSize: 15,
   },
   bottomPart: {
 
   },
   room: {
-    fontWeight: '700',
+    fontFamily: 'OpenSans-SemiBold',
       fontSize:16,
       color: '#07070A'
   },
   state:{   
-    color: '#363636'
+    color: '#363636',
+    fontFamily: 'Montserrat-Regular',
   },
   topPart: {
     justifyContent:'space-between',
     flexDirection: 'row',
     padding: 5,
-  }
+  },
+    lightOff: {
+      backgroundColor: "#fff"
+    }
+})
+
+export const roomWidgetLightOn = StyleSheet.create({
+  container: {
+    backgroundColor: "#4392F1",
+    color: "#fff"
+  },
+  room: {
+    fontFamily: 'OpenSans-SemiBold',
+      fontSize:16,
+      color: '#fff'
+  },
+  state:{   
+    color: '#ccc',
+    fontFamily: 'Montserrat-Regular',
+  },
 })

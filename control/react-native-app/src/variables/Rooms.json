@@ -1,0 +1,54 @@
+
+   [{
+       "name" : "Kitchen",
+       "icon" : "utensils",
+       "devices" : [
+           {
+               "type":"Lamp",
+               "id":1,
+               "deviceNo": 1,
+               "icon":"lightbulb",
+               "state":""
+           },
+           {
+            "type":"Window",
+            "deviceNo": 1,
+            "id":2,
+            "icon":"window",
+            "state":""
+            }
+       ]
+   },
+    {
+        "name" : "Living Room",
+        "icon" : "couch",
+        "devices" : [
+            {
+                "type":"Lamp",
+                "deviceNo": 2,
+                "id":4,
+                "icon":"lightbulb",
+                "state":""
+            },
+            {
+            "type":"Window",
+            "id":5,
+            "deviceNo": 2,
+            "icon":"window",
+            "state":""
+            }
+        ]
+    },
+    {
+        "name" : "Bathroom",
+        "icon" : "bath",
+        "devices" : [
+            {
+                "type":"Lamp",
+                "deviceNo": 3,
+                "id":1,
+                "icon":"lightbulb",
+                "state":""
+            }
+        ]
+    }]
