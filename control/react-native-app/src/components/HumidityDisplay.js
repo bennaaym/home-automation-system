@@ -10,7 +10,7 @@ const HumidityDisplay= () => {
   const humidity = useSelector(state => state.humidityReducer.humidity)
  const data=[
     { x: "", y: (humidity*220)/100,radius:121,innerRadius:109},
-    { x: "", y: 180-(humidity*220)/100,radius:120,innerRadius:110}
+    { x: "", y: 220-(humidity*220)/100,radius:120,innerRadius:110}
   ]
   return (
     <View  style={roomStyles.display}>
