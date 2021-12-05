@@ -16,18 +16,13 @@ export const roomStyles = StyleSheet.create({
     },
     widgetContainer:{
         padding: 15,
-        height: 340
+        height: 340,
+        paddingHorizontal:15
     },
     temperatureContainer:{
       paddingTop: 15,
       height: 340
   },
-    roomContainer:{
-      marginTop: 20,
-      marginLeft:'6%',
-      justifyContent: 'flex-start',
-      flexDirection: 'row'
-    },
     customIcon: {
         width: 45,
         height: 45

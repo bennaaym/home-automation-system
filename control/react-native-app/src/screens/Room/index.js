@@ -13,7 +13,6 @@ import rooms from '../../variables/Rooms.json'
 
 const Room = ({route,navigation}) => {
   const {name,lampNo,windowNo=null,devices=null} = route.params
-  console.log(navigation)
   useThingSpeak(lampNo,windowNo)
   return (
     <View style={roomStyles.container} >
@@ -27,6 +26,8 @@ const Room = ({route,navigation}) => {
             {devices?(devices.map((item) => {       
               return(<DeviceWidget key={item.id} icon={item.icon} deviceNo={item.deviceNo} type={item.type}/>)
             })):""}
+            <DeviceWidget icon="laptop-house" deviceNo={null} type={null}/>
+            <View style={{width: 20}}></View>
           </ScrollView>
         
     </View>

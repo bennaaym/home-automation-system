@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import React  from 'react';
+import {getProgressBarColors} from "../utils/ProgressBar"
 import {useEffect, useState} from 'react';
 import {VictoryPie, VictoryLabel} from "victory-native";
 import { StyleSheet, Text, View  } from 'react-native';
+import { Icon } from "react-native-elements";
 import { roomStyles } from '../styles/RoomStyle';
 import useThingSpeak from '../hooks/useThingSpeak';
 const TemperatureDisplay= () => {
@@ -14,8 +16,8 @@ const TemperatureDisplay= () => {
   })
 
  const data=[
-    { x: "temperature", y: (temperature*220)/100,radius:121,innerRadius:109},
-    { x: "", y: 180-(temperature*220)/100,radius:120,innerRadius:110}
+    { x: "temperature", y: (Math.abs(temperature)*220)/60,radius:121,innerRadius:109},
+    { x: "", y: 220-(Math.abs(temperature)*220)/60,radius:120,innerRadius:110}
   ]
   return (
     <View style={roomStyles.display}>
@@ -38,7 +40,7 @@ const TemperatureDisplay= () => {
               />             
             }
             labelPosition={"centroid"}
-            colorScale={["#E3170A", "#FA9189" ]}
+            colorScale={getProgressBarColors(temperature)}
         >
 
           </VictoryPie>

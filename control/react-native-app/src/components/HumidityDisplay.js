@@ -7,9 +7,7 @@ import { roomStyles } from '../styles/RoomStyle';
 
 const HumidityDisplay= () => {
   useThingSpeak()
-  const temperature = useSelector(state => state.temperatureReducer.temperature)
-
- const humidity = 66
+  const humidity = useSelector(state => state.humidityReducer.humidity)
  const data=[
     { x: "", y: (humidity*220)/100,radius:121,innerRadius:109},
     { x: "", y: 180-(humidity*220)/100,radius:120,innerRadius:110}
