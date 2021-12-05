@@ -1,8 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { BannerStyles } from "../styles/HeaderStyle";
-import { ProfileAvatar } from "./ProfileAvatar";
-
 
 
 const Banner = ({title,description}) => {

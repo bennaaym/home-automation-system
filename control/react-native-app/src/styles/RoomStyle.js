@@ -16,8 +16,12 @@ export const roomStyles = StyleSheet.create({
     },
     widgetContainer:{
         padding: 15,
-        flex:1,
+        height: 340
     },
+    temperatureContainer:{
+      paddingTop: 15,
+      height: 340
+  },
     roomContainer:{
       marginTop: 20,
       marginLeft:'6%',
@@ -27,11 +31,35 @@ export const roomStyles = StyleSheet.create({
     customIcon: {
         width: 45,
         height: 45
-    }
+    },
+    displayTitle:{
+      fontFamily: 'OpenSans-Regular',
+      color: '#274C77',
+      textAlign: 'center',
+      fontSize: 17
+    },
+    display:{
+      paddingTop:18
+    },
+    flatList:{
+      height:70,
+      alignContent:'center',
+      paddingTop: 10,
+      marginTop: 15
+    },
+    flatListElement:{
+      fontFamily: 'OpenSans-SemiBold',
+      marginLeft: 30
+    },
+    flatListElementText:{
+      fontFamily: 'OpenSans-SemiBold',
+      marginBottom: 5
+    },
   });
 
   export const deviceWidgetStyle = StyleSheet.create({
     container: {
+      marginTop:50,
       justifyContent:'space-between',
       flexDirection: 'column',
       padding: 14,

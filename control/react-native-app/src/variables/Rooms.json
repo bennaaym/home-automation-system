@@ -38,17 +38,4 @@
             "state":""
             }
         ]
-    },
-    {
-        "name" : "Bathroom",
-        "icon" : "bath",
-        "devices" : [
-            {
-                "type":"Lamp",
-                "deviceNo": 3,
-                "id":1,
-                "icon":"lightbulb",
-                "state":""
-            }
-        ]
     }]

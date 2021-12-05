@@ -2,11 +2,9 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../screens/Home';
-import { HeaderStyles } from '../styles/HeaderStyle';
 import { ProfileAvatar } from '../utils/ProfileAvatar';
 import Room from '../screens/Room';
 import { Settings } from '../utils/Settings';
-import { Avatar } from 'react-native-elements/dist/avatar/Avatar';
 
 
 const Stack = createStackNavigator();

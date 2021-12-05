@@ -6,9 +6,6 @@ import { getLampStateExpression } from '../redux/crud';
 import { Icon,Badge } from 'react-native-elements'
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { Switch } from 'react-native';
-import Window from './Window';
-import Lamp from './Lamp'
-import TemperatureReader from './TemperatureReader';
 import useThingSpeak from '../hooks/useThingSpeak';
 import { roomWidgetStyle,roomWidgetLightOn } from '../styles/HomeStyle';
 
@@ -20,7 +17,7 @@ const RoomWidget = ({name,lampNo,windowNo,devices,icon,props}) => {
   const widgetStyle = Lamp == 1 ? StyleSheet.compose(roomWidgetLightOn.container,roomWidgetStyle.container ):
   StyleSheet.compose(roomWidgetStyle.lightOff,roomWidgetStyle.container);
   return (
-    <TouchableOpacity style={widgetStyle} onPress={()=>{navigation.navigate('Room',{name: name,lampNo: lampNo,windowNo: windowNo,devices: devices})}}>
+    <TouchableOpacity style={widgetStyle} onPress={()=>{navigation.navigate('Room',{ name: name,lampNo: lampNo,windowNo: windowNo,devices: devices})}}>
       <View style={roomWidgetStyle.topPart}>
       <Icon
             name={icon}

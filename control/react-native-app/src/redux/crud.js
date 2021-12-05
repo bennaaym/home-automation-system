@@ -2,9 +2,10 @@ import React  from 'react';
 import { controlLight,getLampState } from './actions/lamps';
 import { controlWindow,getWindowState } from "./actions/servos";
 import useThingSpeak from '../hooks/useThingSpeak';
+import data from '../variables/User.json'
 
-const channelNo = "1580471";
-const apiWriteKey = "E1IEL3E8446RN0I8";
+const channelNo = data.channelNo;
+const apiWriteKey = data.apiWriteKey;
 
 const headers = {
     'Content-Type': 'application/json',

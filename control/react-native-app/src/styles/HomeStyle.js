@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     },
     roomContainer:{
       marginTop: 20,
-      marginLeft:'6%',
+      marginLeft:10,
       justifyContent: 'flex-start',
       flexDirection: 'row',
       flexWrap: 'wrap'
@@ -29,7 +29,7 @@ export const roomWidgetStyle = StyleSheet.create({
     padding: 12,
     marginRight:12,
     marginBottom:12,
-    width: '45%',
+    width: 150,
     borderTopLeftRadius: 30,
     borderBottomRightRadius:30,
     borderTopRightRadius: 5,
