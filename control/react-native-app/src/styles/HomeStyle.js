@@ -44,6 +44,9 @@ export const roomWidgetStyle = StyleSheet.create({
     fontSize: 15,
   },
   bottomPart: {
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    paddingLeft:2
 
   },
   room: {

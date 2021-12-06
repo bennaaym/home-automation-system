@@ -10,11 +10,6 @@ import useThingSpeak from '../hooks/useThingSpeak';
 const TemperatureDisplay= () => {
   useThingSpeak()
   const temperature = useSelector(state => state.temperatureReducer.temperature)
-
-  useEffect(() => {
-    console.log(temperature);
-  })
-
  const data=[
     { x: "temperature", y: (Math.abs(temperature)*220)/60,radius:121,innerRadius:109},
     { x: "", y: 220-(Math.abs(temperature)*220)/60,radius:120,innerRadius:110}

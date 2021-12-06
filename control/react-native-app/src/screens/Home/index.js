@@ -20,7 +20,7 @@ const Home = (props) =>{
             room.devices.map((device)=>{(device.type == "Lamp")?lamp=device.deviceNo:((device.type == "Window")?window=device.deviceNo:"")});
             return(<RoomWidget key={room.name} devices={room.devices} name={room.name} lampNo={lamp} windowNo={window} icon={room.icon} props={props} />)
           })}
-          <RoomWidget  name="Add" icon="house-user" props={props} />
+          <RoomWidget icon="house-user" props={props} />
         </View>
       <StatusBar style="auto" />
     </View>

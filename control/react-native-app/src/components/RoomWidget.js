@@ -9,7 +9,7 @@ import { Switch } from 'react-native';
 import useThingSpeak from '../hooks/useThingSpeak';
 import { roomWidgetStyle,roomWidgetLightOn } from '../styles/HomeStyle';
 
-const RoomWidget = ({name,lampNo=null,windowNo=null,devices=null,icon,props}) => {
+const RoomWidget = ({name=null,lampNo=null,windowNo=null,devices=null,icon,props}) => {
   useThingSpeak(lampNo,windowNo)
   const {navigation} = props;
   const Lamp = (getLampStateExpression(lampNo) != null) ? useSelector(getLampStateExpression(lampNo) ) : null;
@@ -28,7 +28,13 @@ const RoomWidget = ({name,lampNo=null,windowNo=null,devices=null,icon,props}) =>
         }
       </View>
       <View style={roomWidgetStyle.bottomPart}>
-          <Text style={Lamp == 1 ? roomWidgetLightOn.room : roomWidgetStyle.room}>{name}</Text>
+          {name?<Text style={Lamp == 1 ? roomWidgetLightOn.room : roomWidgetStyle.room}>{name}</Text>:<Icon
+            name="plus"
+            type='font-awesome-5'
+            color={'#000'}
+            size={13}
+            style={{marginBottom:3}}
+        />}
           <Text style={Lamp == 1 ? roomWidgetLightOn.state :roomWidgetStyle.state}>{Lamp == 1 ? "On" : (Lamp == 0 ? "Off" : "Configure a new room")}</Text>
       </View>
     </TouchableOpacity>
