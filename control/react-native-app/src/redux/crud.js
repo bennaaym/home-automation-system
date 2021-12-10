@@ -3,6 +3,7 @@ import { controlLight,getLampState } from './actions/lamps';
 import { controlWindow,getWindowState } from "./actions/servos";
 import useThingSpeak from '../hooks/useThingSpeak';
 import data from '../variables/User.json'
+import { showModal,hideModal } from './actions/modal';
 
 const channelNo = data.channelNo;
 const apiWriteKey = data.apiWriteKey;
@@ -146,6 +147,16 @@ export const turnOffLights = (dispatch) => {
     dispatch(getLampState(1,channelNo));
     dispatch(getLampState(2,channelNo));
 }
+
+export const setModalVisible = (dispatch) => {
+  dispatch(showModal())
+}
+
+export const setModalHidden = (dispatch) => {
+  dispatch(hideModal())
+}
+
+
 
 export const getLampStateExpression = (lampNo) => {
   const state = lampNo == 1 ? state => state.lampReducer.kitchenLamp : 

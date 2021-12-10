@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "440158712476",
+    "project_id": "bsm313-home-automation",
+    "storage_bucket": "bsm313-home-automation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440158712476:android:6dec2c18523c8d7f10b359",
+        "android_client_info": {
+          "package_name": "com.myproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440158712476-fkmks3npmcrgk426ehq1mg4vego83ef4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-spm79AFyJki2JqK13YfzbxzzLIh_1RM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440158712476-fkmks3npmcrgk426ehq1mg4vego83ef4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -9,6 +9,7 @@ import TemperatureDisplay from '../../components/TemperatureDisplay';
 import HumidityDisplay from '../../components/HumidityDisplay';
 import useThingSpeak from '../../hooks/useThingSpeak';
 import rooms from '../../variables/Rooms.json'
+import { SettingsModal } from '../../components/SettingsModal';
 
 
 const Room = ({route,navigation}) => {
@@ -17,6 +18,7 @@ const Room = ({route,navigation}) => {
   return (
     <View style={roomStyles.container} >
       <Banner title={name} description={`${devices.length} devices connected`} />
+          <SettingsModal props={{navigation}}/>
           <FlatList style={roomStyles.flatList} data={rooms} keyExtractor={item => item.name} horizontal renderItem={({item}) => (<ListElement name={item.name} current={name} props={navigation} lampNo={lampNo} windowNo={windowNo} devices={item.devices}/>)} />
           <ScrollView style={roomStyles.temperatureContainer} horizontal={true}  >
             <TemperatureDisplay />
