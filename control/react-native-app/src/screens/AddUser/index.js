@@ -27,7 +27,7 @@ const {navigation} = props;
                 </Picker>
             </View>
         </View>
-        {(selectedValue == 'member')?<RegisterMember props={props}/>:<AddVisitor />}  
+        {(selectedValue == 'member')?<RegisterMember props={props}/>:<AddVisitor visitor={true}/>}  
     </View>
   </SafeAreaView>
 

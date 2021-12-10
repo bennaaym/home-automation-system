@@ -32,7 +32,6 @@ export const __doCreateUser = async (email, password,dispatch) => {
       password
     )
     if (response && response.user) {
-      console.log(response)
       dispatch(setNewUser(response.user.uid))
       Alert.alert("Success ✅", "Account created successfully")
       return(uid)

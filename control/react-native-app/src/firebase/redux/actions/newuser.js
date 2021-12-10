@@ -10,3 +10,15 @@ export const setNewUser = (uid) => (dispatch) => {
         console.log(error);
     } 
 };
+
+export const setPictureUrl = (url) => (dispatch) => { 
+    try {
+        dispatch({
+            type: actionTypes.SET_PICTURE_URL,
+            payload: url
+        })    
+    } catch (error) {
+        console.log(error);
+    } 
+};
+

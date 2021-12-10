@@ -98,7 +98,7 @@ export const styles = StyleSheet.create({
         flex: 0.3,
         alignItems: "center",
         flexDirection: "row",
-        justifyContent:"space-between",
+        justifyContent:"center",
         marginTop : 15
       },
       signInButtonStyle: {
@@ -161,5 +161,49 @@ export const styles = StyleSheet.create({
       customIcon:{
           width: '85%',
           height: '90%',
+      },
+      checkbox: {
+        alignSelf: "center",
+      },
+      label: {
+        margin: 8,
       }
 })
+
+export const AddPictureStyles = StyleSheet.create({
+  container:{
+    //backgroundColor: 'red',
+    padding: 35,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  pictureContainer: {
+    height: 270,
+    width: 250,
+    marginVertical: 30,
+    borderRadius: 3,
+    borderColor: "#001021",
+    borderWidth: 1
+  },
+  chooseButton: {
+    borderRadius:40,
+    height:40,
+    width: 120,
+    padding:10,
+    backgroundColor: '#2D7DD2'
+  },
+  uploadButton: {
+    borderRadius:40,
+    height:40,
+    width: 120,
+    padding:10,
+    backgroundColor: '#82AC20'
+  },
+  chooseButtonText: {
+    color: '#fff',
+    fontFamily: 'Montserrat-Regular',
+    fontSize:14
+  }
+
+}) 

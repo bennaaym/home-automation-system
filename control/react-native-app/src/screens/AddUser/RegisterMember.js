@@ -79,7 +79,7 @@ export const RegisterMember = ({props}) => {
                 <Icon name="user-lock" type='font-awesome-5' color='#595266'  size={22}/>  
             </View>
         
-        <View style={styles.signInButtonContainerStyle}>
+        <View style={{flex:0.3,justifyContent:'space-between',flexDirection:'row',marginHorizontal:5,marginTop:7}}>
           <TouchableHighlight
             style={styles.signInButtonStyle}
             onPress={__doSignUp}
