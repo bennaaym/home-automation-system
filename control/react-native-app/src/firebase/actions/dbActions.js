@@ -1,6 +1,7 @@
 import { db } from "../firebase"
 import { useState } from "react";
 import { setNewUser, setPictureUrl,setUserKey } from "../redux/actions/newuser";
+import uuid from 'react-native-uuid';
 import { Alert } from "react-native";
 
 
@@ -45,21 +46,10 @@ export const verifyKey = (key,collection) => {
   return(exists)
 }
 
-function makeKey(length) {
-  var result           = '';
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for ( var i = 0; i < length; i++ ) {
-    result += characters.charAt(Math.floor(Math.random() * 
-    charactersLength));
-    }
- return result;
-}
-
 export const generateUniqueKey = (collection) => {
-   let uniqueKey = makeKey(7)
+   let uniqueKey = uuid.v4()
    while(verifyKey(uniqueKey,collection) == true){
-      uniqueKey = (makeKey(7))
+      uniqueKey = (uuid.v4())
    }
    return uniqueKey
 }
