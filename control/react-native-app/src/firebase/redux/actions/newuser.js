@@ -22,3 +22,14 @@ export const setPictureUrl = (url) => (dispatch) => {
     } 
 };
 
+export const setUserKey = (key) => (dispatch) => { 
+    try {
+        dispatch({
+            type: actionTypes.SET_USER_KEY,
+            payload: key
+        })    
+    } catch (error) {
+        console.log(error);
+    } 
+};
+

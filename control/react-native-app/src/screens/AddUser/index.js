@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import { View,Text,SafeAreaView,TextInput,TouchableHighlight, Picker } from "react-native";
 import __doCreateUser from '../../firebase/auth'
 import {Icon} from 'react-native-elements'
-import { AddVisitor } from "./AddVisitor";
+import { AddUserToFireStore } from "./AddUserToFireStore ";
 import { styles } from "../../styles/AddUserPageStyle";
 import { RegisterMember } from "./RegisterMember";
 export const AddUser = (props) => {
@@ -27,7 +27,7 @@ const {navigation} = props;
                 </Picker>
             </View>
         </View>
-        {(selectedValue == 'member')?<RegisterMember props={props}/>:<AddVisitor visitor={true}/>}  
+        {(selectedValue == 'member')?<RegisterMember props={props}/>:<AddUserToFireStore visitor={true}/>}  
     </View>
   </SafeAreaView>
 

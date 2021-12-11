@@ -2,7 +2,8 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
     uid : "",
-    picture_url: ""
+    picture_url: "",
+    key: ""
 }
 
 function userReducer(user= initialState,action){
@@ -18,6 +19,10 @@ function userReducer(user= initialState,action){
         case actionTypes.SET_PICTURE_URL:
             newState = {...user}
             newState.picture_url = payload
+            return newState
+        case actionTypes.SET_USER_KEY:
+            newState = {...user}
+            newState.key = payload
             return newState
         default:
           return user;

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { Text, View,TextInput,TouchableHighlight } from "react-native";
 import { CheckBox } from 'react-native-elements'
 import { Icon } from "react-native-elements";
@@ -6,10 +6,13 @@ import auth from '@react-native-firebase/auth'
 import { useSelector,useDispatch } from 'react-redux';
 import { styles } from "../../styles/AddUserPageStyle";
 import { AddPicture } from "./AddPicture";
+import { addMember,addVisitor } from "../../firebase/actions/dbActions";
+import { QRCodeGenerator } from "./QRCodeGenerator";
 
-export const AddVisitor = ({visitor=false}) => {
+export const AddUserToFireStore = ({visitor=false}) => {
     const uid = useSelector(state => state.userReducer.uid)
     const picture_url = useSelector(state => state.userReducer.picture_url)
+    const key = useSelector(state => state.userReducer.key)
     const blue = "#ff0000";
     const dispatch = useDispatch()
     const [name, setName] = useState("")
@@ -17,15 +20,8 @@ export const AddVisitor = ({visitor=false}) => {
     const [admin, setAdmin] = useState(false)
     const [error, setError] = useState("")
     const [isValid, setValid] = useState(true)
-    const [key,setKey] = useState("")
-    const __doSignUp = () => {
-      if (!name) {
-        setError("name required *")
-        setValid(false)
-        return
-      }
-      //__doCreateUser(email, password,dispatch)
-    }
+ 
+    if(key.length > 0)return(<QRCodeGenerator />)
     if(picture_url.length == 0)return(<AddPicture />)
     return (
           <View style={styles.formContainerStyle}>
@@ -47,7 +43,7 @@ export const AddVisitor = ({visitor=false}) => {
                 />
                 <Icon name="user" type='font-awesome-5' color='#595266' size={22}/>
             </View>  
-            <View style={{flexDirection:'row',alignItems: 'center',justifyContent: 'space-between',paddingRight: 10}}>
+           {(!visitor)?<View style={{flexDirection:'row',alignItems: 'center',justifyContent: 'space-between',paddingRight: 10}}>
             <CheckBox
                 iconRight
                 title='Admin'
@@ -58,12 +54,12 @@ export const AddVisitor = ({visitor=false}) => {
                 onPress={() => setAdmin(!admin)}
                 />
                 <Icon name="user-shield" type='font-awesome-5' color='#595266'  size={22}/>  
-            </View>
+            </View>:null}
         
         <View style={styles.signInButtonContainerStyle}>
           <TouchableHighlight
             style={styles.signInButtonStyle}
-            onPress={__doSignUp}
+            onPress={()=> {(!visitor)?addMember(uid,picture_url,name,admin,dispatch):addVisitor(picture_url,name,dispatch)}}
             underlayColor={blue}
           >
             <View

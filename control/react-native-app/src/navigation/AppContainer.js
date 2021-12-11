@@ -6,7 +6,6 @@ import { AddUser } from '../screens/AddUser';
 import { ProfileAvatar } from '../utils/ProfileAvatar';
 import Room from '../screens/Room';
 import { Settings } from '../utils/Settings';
-import { AddVisitor } from '../screens/AddUser/AddVisitor';
 
 
 const Stack = createStackNavigator();
