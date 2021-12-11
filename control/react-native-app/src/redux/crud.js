@@ -4,6 +4,7 @@ import { controlWindow,getWindowState } from "./actions/servos";
 import useThingSpeak from '../hooks/useThingSpeak';
 import data from '../variables/User.json'
 import { showModal,hideModal } from './actions/modal';
+import { setNewUser, setPictureUrl,setUserKey } from '../firebase/redux/actions/newuser';
 
 const channelNo = data.channelNo;
 const apiWriteKey = data.apiWriteKey;
@@ -168,4 +169,10 @@ export const getWindowStateExpression = (windowNo) => {
   const state = windowNo == 1 ? state => state.servoReducer.kitchenWindow : 
   (windowNo == 2 ? state => state.servoReducer.livingRoomWindow:null) 
   return state;
+}
+
+export const initialize = (dispatch) => {
+ dispatch(setUserKey(""))
+ dispatch(setPictureUrl(""))
+ dispatch(setNewUser(""))
 }

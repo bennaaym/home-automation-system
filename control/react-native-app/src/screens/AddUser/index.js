@@ -27,7 +27,7 @@ const {navigation} = props;
                 </Picker>
             </View>
         </View>
-        {(selectedValue == 'member')?<RegisterMember props={props}/>:<AddUserToFireStore visitor={true}/>}  
+        {(selectedValue == 'member')?<RegisterMember props={props}/>:<AddUserToFireStore  props={props} visitor={true}/>}  
     </View>
   </SafeAreaView>
 

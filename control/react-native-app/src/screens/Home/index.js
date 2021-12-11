@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import rooms from '../../variables/Rooms.json'
-import React  from 'react';
+import React,{useEffect}  from 'react';
 import data from "../../variables/User.json";
 import {  View, Button, TouchableOpacity, TouchableHighlight, Text } from 'react-native';
 import RoomWidget from '../../components/RoomWidget'
@@ -10,12 +10,18 @@ import{ styles }from '../../styles/HomeStyle';
 import Banner from '../../utils/Banner';
 import auth from '@react-native-firebase/auth'
 import { getUserByUid } from '../../firebase/actions/dbActions';
+import { initialize } from '../../redux/crud';
+import { useDispatch } from 'react-redux';
 
 
 
 
 const Home = (props) =>{
   const {navigation} = props;
+  const dispatch = useDispatch()
+  useEffect(() => {
+    initialize(dispatch)
+  })
   const uid = auth().currentUser.uid
   const username = getUserByUid(uid)
   let lamp,window=null;

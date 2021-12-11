@@ -47,7 +47,7 @@ export const verifyKey = (key,collection) => {
 
 function makeKey(length) {
   var result           = '';
-  var characters       = '0123456789';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var charactersLength = characters.length;
   for ( var i = 0; i < length; i++ ) {
     result += characters.charAt(Math.floor(Math.random() * 
@@ -66,7 +66,6 @@ export const generateUniqueKey = (collection) => {
 
 export const addMember = (uid,picture_url,name,admin,dispatch) => {
   var uniqueKey  = generateUniqueKey('users')
-  console.log(uniqueKey)
   db
   .collection('users')
   .add({

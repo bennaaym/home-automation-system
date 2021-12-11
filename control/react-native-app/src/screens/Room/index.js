@@ -10,10 +10,16 @@ import HumidityDisplay from '../../components/HumidityDisplay';
 import useThingSpeak from '../../hooks/useThingSpeak';
 import rooms from '../../variables/Rooms.json'
 import { SettingsModal } from '../../components/SettingsModal';
+import { initialize } from '../../redux/crud';
+import { useDispatch } from 'react-redux';
 
 
 const Room = ({route,navigation}) => {
   const {name,lampNo,windowNo=null,devices=null} = route.params
+  const dispatch = useDispatch()
+  useEffect(() => {
+    initialize(dispatch)
+  }, [])
   useThingSpeak(lampNo,windowNo)
   return (
     <View style={roomStyles.container} >

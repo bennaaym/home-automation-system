@@ -9,7 +9,7 @@ import { AddPicture } from "./AddPicture";
 import { addMember,addVisitor } from "../../firebase/actions/dbActions";
 import { QRCodeGenerator } from "./QRCodeGenerator";
 
-export const AddUserToFireStore = ({visitor=false}) => {
+export const AddUserToFireStore = ({visitor=false,props}) => {
     const uid = useSelector(state => state.userReducer.uid)
     const picture_url = useSelector(state => state.userReducer.picture_url)
     const key = useSelector(state => state.userReducer.key)
@@ -21,7 +21,7 @@ export const AddUserToFireStore = ({visitor=false}) => {
     const [error, setError] = useState("")
     const [isValid, setValid] = useState(true)
  
-    if(key.length > 0)return(<QRCodeGenerator />)
+    if(key.length > 0)return(<QRCodeGenerator  props={props} />)
     if(picture_url.length == 0)return(<AddPicture />)
     return (
           <View style={styles.formContainerStyle}>
