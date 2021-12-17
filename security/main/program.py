@@ -3,11 +3,11 @@ import time
 import cv2
 from typing import List
 
-from communication.serial_communication import Serial
-from recognition.qr_recognizer import QRRecognizer
-from recognition.face_recognizer import FaceRecognizer
-from tts.messages import Messages
-from tts.text_to_speech import TTS
+from security.communication.serial_communication import Serial
+from security.recognition.qr_recognizer import QRRecognizer
+from security.recognition.face_recognizer import FaceRecognizer
+from security.tts.messages import Messages
+from security.tts.text_to_speech import TTS
 
 
 class Program:

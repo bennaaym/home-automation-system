@@ -4,9 +4,9 @@ import cv2
 import numpy as np
 import urllib
 from threading import Thread
-from user.user import User
-from tts.text_to_speech import TTS
-from tts.messages import Messages
+from security.user.user import User
+from security.tts.text_to_speech import TTS
+from security.tts.messages import Messages
 
 
 class FaceRecognizer:
