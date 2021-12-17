@@ -21,15 +21,15 @@ export const styles = StyleSheet.create({
       elevation: 5
     },
     modalViewContainer:{
-        paddingHorizontal: 35,
+        paddingHorizontal: 30,
         alignItems: "center",
-        paddingBottom: 25,
+        paddingBottom: 10,
         borderRadius: 20,
     },
     button: {
         borderRadius: 20,
         padding: 10,
-        marginTop:15,
+        marginBottom:15,
         width:110,
         elevation: 2
       },
