@@ -16,7 +16,7 @@ class Program:
     """
     @classmethod
     def run(self):
-        CAM_MIN_DISTANCE = 20
+        CAM_MIN_DISTANCE = 30
         CAM_MAX_DISTANCE = 50
         _serial = Serial()
         capture = cv2.VideoCapture(0)
@@ -26,12 +26,12 @@ class Program:
         threads: List[Thread] = []
 
         while True:
+
             byte = _serial.read()
             distance = int.from_bytes(byte, byteorder='big')
             print(f"distance: {distance}")
 
-            if distance >= CAM_MIN_DISTANCE and distance <= CAM_MAX_DISTANCE or True:
-
+            if distance >= CAM_MIN_DISTANCE and distance <= CAM_MAX_DISTANCE:
                 threads.append(Thread(target=tts.speak, args=(Messages.SHOW_QR_CODE, )))
                 threads[-1].start()
 
@@ -40,13 +40,14 @@ class Program:
                 if user:
                     # Face authentication
                     if face_recognizer.run(user):
-                        _serial.write('180')
+                        cv2.destroyAllWindows()
+                        _serial.write('0')
                         tts.speak(Messages.WELCOME_HOME)
                         time.sleep(5)
-                        _serial.write('0')
+                        _serial.write('1')
                         tts.speak(Messages.DOOR_CLOSE)
 
                 qr_recognizer.reset()
                 face_recognizer.reset()
                 distance = -1
-            time.sleep(1)
+                time.sleep(5)

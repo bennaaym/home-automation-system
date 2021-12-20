@@ -78,8 +78,8 @@ class FaceRecognizer:
 
         cv2.destroyAllWindows()
 
-        for thread in self.__threads:
-            thread.join()
+        # for thread in self.__threads:
+        #     thread.join()
 
         return not self.__is_running
 

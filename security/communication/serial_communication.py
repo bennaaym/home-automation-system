@@ -13,7 +13,7 @@ class Serial:
                     self,
                     PORT: str = 'COM3',
                     BAUD_RATE: int = 9600,
-                    TIMEOUT: float = .001,
+                    TIMEOUT: float = .1,
                     ENCODING: str = 'utf-8'
 
                 ) -> None:

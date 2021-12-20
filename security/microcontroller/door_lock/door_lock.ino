@@ -1,12 +1,15 @@
 /**
-  Actuator : SG90 Mini Servo
+  Actuator : Solenoid 12V
   Pins: 
-    Lock : 9
+    Relay : 3
 **/
-#include <Servo.h>  
-Servo lockServo;
-const short LOCK_PIN = 9;
-int lockAngle = 0;
+
+#define OPEN HIGH
+#define CLOSE LOW
+
+const short RELAY = 3;
+int doorState = CLOSE;
+bool isReadyToRead = false;
 
 
 /**
@@ -29,10 +32,11 @@ const int BAUD_RATE = 9600;
 // init
 void setup() 
 {
-   lockServo.attach(LOCK_PIN);
+   pinMode(RELAY, OUTPUT);
    pinMode(TRIG_PIN, OUTPUT);
    pinMode(ECHO_PIN, INPUT);
    Serial.begin(BAUD_RATE); 
+   digitalWrite(RELAY,CLOSE);
 }
 
 void loop() 
@@ -41,16 +45,19 @@ void loop()
     // actively checking if there is a received message from the python script
     if(Serial.available() > 0)
     {
-      lockAngle = Serial.parseInt();
-      lockServo.write(lockAngle);
+      doorState = Serial.parseInt();
+      if (doorState == CLOSE)
+        digitalWrite(RELAY, OPEN);
+      else if (doorState == OPEN)
+        digitalWrite(RELAY, CLOSE); 
     }
     
     else
     {
       digitalWrite(TRIG_PIN, LOW);  
-      delayMicroseconds(2);  
+      delayMicroseconds(4);  
       digitalWrite(TRIG_PIN, HIGH);  
-      delayMicroseconds(10);  
+      delayMicroseconds(15);  
       digitalWrite(TRIG_PIN, LOW);  
       duration = pulseIn(ECHO_PIN, HIGH);  
       distance = calculateDistance(duration);
@@ -66,6 +73,6 @@ void loop()
 // returns the distance in centimeter between the ultrasonic sensor and an object
 int calculateDistance(int duration) 
 {
-   const float SOUND_SPEED = 0.0343; // 0.0343 us/cm
-   return (duration * SOUND_SPEED) / 2;
+   const float SOUND_SPEED = 0.034; // 0.034 us/cm
+   return ((duration * SOUND_SPEED) / 2);
 }
