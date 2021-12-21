@@ -40,7 +40,6 @@ class Program:
                 if user:
                     # Face authentication
                     if face_recognizer.run(user):
-                        cv2.destroyAllWindows()
                         _serial.write('0')
                         tts.speak(Messages.WELCOME_HOME)
                         time.sleep(5)

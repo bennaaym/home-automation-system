@@ -9,8 +9,6 @@
 
 const short RELAY = 3;
 int doorState = CLOSE;
-bool isReadyToRead = false;
-
 
 /**
   Sensor: HC-SR04
@@ -49,7 +47,7 @@ void loop()
       if (doorState == CLOSE)
         digitalWrite(RELAY, OPEN);
       else if (doorState == OPEN)
-        digitalWrite(RELAY, CLOSE); 
+        digitalWrite(RELAY, CLOSE);  
     }
     
     else
