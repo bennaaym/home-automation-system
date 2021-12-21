@@ -27,8 +27,8 @@ const Room = ({route,navigation}) => {
           <SettingsModal props={{navigation}}/>
           <FlatList style={roomStyles.flatList} data={rooms} keyExtractor={item => item.name} horizontal renderItem={({item}) => (<ListElement name={item.name} current={name} props={navigation} lampNo={lampNo} windowNo={windowNo} devices={item.devices}/>)} />
           <ScrollView style={roomStyles.temperatureContainer} horizontal={true}  >
-            <TemperatureDisplay />
-            <HumidityDisplay />
+            <TemperatureDisplay room={name} />
+            <HumidityDisplay room={name}/>
           </ScrollView>
           <ScrollView style={roomStyles.widgetContainer} horizontal={true}  >
             {devices?(devices.map((item) => {       

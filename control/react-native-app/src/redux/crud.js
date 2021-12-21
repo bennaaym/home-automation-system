@@ -171,6 +171,20 @@ export const getWindowStateExpression = (windowNo) => {
   return state;
 }
 
+export const getTemperatureStateExpression = (room) => {
+  const state = (room == "Kitchen") ? state => state.temperatureReducer.kitchenTemperature : 
+  ( room == "Living Room" ? state => state.temperatureReducer.livingRoomTemperature:null) 
+  return state;
+}
+
+
+export const getHumidityStateExpression = (room) => {
+  const state = (room == "Kitchen") ? state => state.humidityReducer.kitchenHumidity : 
+  ( room == "Living Room" ? state => state.humidityReducer.livingRoomHumidity:null) 
+  return state;
+}
+
+
 export const initialize = (dispatch) => {
  dispatch(setUserKey(""))
  dispatch(setPictureUrl(""))
