@@ -13,7 +13,8 @@ const char* readAPIKey  = "SRMRPASNKDIMQPBX";
 WiFiClient client;   // make the client of the WiFi which connect to the ThingSpeak webServer
 ESP8266WebServer server(80); 
 
-Servo servo;
+Servo kitchen_servo;
+Servo living_room_servo;
 
 void setup() {
    Serial.begin(115200);
@@ -23,8 +24,10 @@ void setup() {
      delay(500);
      Serial.print(".");
    }
-   servo.attach(2); //D4
-   servo.write(0);
+   kitchen_servo.attach(2); //D4
+   kitchen_servo.write(0);
+   living_room_servo.attach(3); //D4
+   living_room_servo.write(0);
    delay(2000);
    Serial.println(WiFi.localIP());    // print the wifi local ip
   // in urt type the "/" then call the handle on connect function
@@ -34,5 +37,6 @@ void setup() {
 
 void loop() {
   server.handleClient();  
-  servo.write(ThingSpeak.readFloatField(channel_num,4));
+  kitchen_servo.write(ThingSpeak.readFloatField(channel_num,4));
+  living_room_servo.write(ThingSpeak.readFloatField(channel_num,5));
 }
