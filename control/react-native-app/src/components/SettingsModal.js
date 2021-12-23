@@ -35,6 +35,12 @@ export const SettingsModal = ({props}) => {
                         onPress={() => setModalHidden(dispatch)}    
                     />              
                     <View style={styles.modalViewContainer}>
+                            <Pressable
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() => {setModalHidden(dispatch);navigation.navigate('QrCode')}}
+                            >
+                            <Text style={styles.textStyle}>QR Code</Text>
+                          </Pressable>
                           {(Admin == true)?(<Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => {setModalHidden(dispatch);navigation.navigate('AddUser')}}

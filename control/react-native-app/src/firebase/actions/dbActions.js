@@ -31,6 +31,19 @@ export const getUserRoleByUid = (uid) => {
     return(isAdmin)
 }
 
+export const getUserKeyByUid = (uid) => {
+  const [key,setKey] =  useState("")
+  db
+  .collection('users')
+  .get()
+  .then(querySnapshot => {
+    querySnapshot.forEach(documentSnapshot => {
+      if(documentSnapshot.data().uid == uid) setKey(documentSnapshot.data().key);
+    });
+  });
+  return(key)
+}
+
 export const verifyKey = (key,collection) => {
   let exists = false
   db
