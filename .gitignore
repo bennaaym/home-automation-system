@@ -127,7 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-
 security/database/serviceAccountKey.json
-node_modules

@@ -1,5 +1,4 @@
-from main.program import Program
-
+from security.main.program import Program
 
 
 if __name__ == '__main__':
