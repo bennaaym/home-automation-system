@@ -14,7 +14,9 @@ const useThingSpeak = (lampNo=null,windowNo=null) => {
         if(lampNo != null)dispatch(getLampState(lampNo,channelNo));
         if(windowNo != null && windowNo != undefined)dispatch(getWindowState(windowNo,channelNo));
         dispatch(getTemperature(3,channelNo));
+        dispatch(getTemperature(7,channelNo));
         dispatch(getHumidity(6,channelNo));
+        dispatch(getHumidity(8,channelNo));
     });
 }
 

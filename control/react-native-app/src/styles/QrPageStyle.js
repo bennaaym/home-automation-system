@@ -7,6 +7,9 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       textAlign: 'center',
       padding: 10,
+      height: '75%',
+      borderTopRightRadius: 40,
+      borderTopLeftRadius: 40,
     },
     titleStyle: {
       fontSize: 17,
@@ -46,3 +49,26 @@ export const styles = StyleSheet.create({
       padding: 10,   
     }
   });
+
+  export const headerStyles = StyleSheet.create({
+
+    containerStyle: {
+        paddingTop: 30,
+        flexDirection: "column",
+        justifyContent: "space-between", 
+        backgroundColor:"#E0E0E0" 
+      },
+      headerContainerStyle: {
+        height: '25%',
+        paddingTop: 10,
+        alignItems: "center",
+        justifyContent:'space-evenly'
+        
+      },
+      headerTitleStyle: {
+          color: "#8CAD34",
+          fontSize: 30,
+          textAlign: "center",
+          fontFamily: 'OpenSans-SemiBold',
+        },
+})

@@ -4,10 +4,12 @@ import useThingSpeak from "../hooks/useThingSpeak";
 import { VictoryBar, VictoryChart, VictoryTheme,VictoryPie, VictoryLabel,VictoryAnimation} from "victory-native";
 import { StyleSheet, Text, View, Button, TouchableOpacity,ScrollView } from 'react-native';
 import { roomStyles } from '../styles/RoomStyle';
+import { getHumidityStateExpression } from "../redux/crud";
 
-const HumidityDisplay= () => {
+const HumidityDisplay= ({room}) => {
   useThingSpeak()
-  const humidity = useSelector(state => state.humidityReducer.humidity)
+  const expression = getHumidityStateExpression(room);
+  const humidity = useSelector(expression)
  const data=[
     { x: "", y: (humidity*220)/100,radius:121,innerRadius:109},
     { x: "", y: 220-(humidity*220)/100,radius:120,innerRadius:110}

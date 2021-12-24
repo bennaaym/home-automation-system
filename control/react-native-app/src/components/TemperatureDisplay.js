@@ -7,9 +7,11 @@ import { StyleSheet, Text, View  } from 'react-native';
 import { Icon } from "react-native-elements";
 import { roomStyles } from '../styles/RoomStyle';
 import useThingSpeak from '../hooks/useThingSpeak';
-const TemperatureDisplay= () => {
+import { getTemperatureStateExpression } from "../redux/crud";
+const TemperatureDisplay= ({room}) => {
   useThingSpeak()
-  const temperature = useSelector(state => state.temperatureReducer.temperature)
+  const expression = getTemperatureStateExpression(room);
+  const temperature = expression?useSelector(expression):null
  const data=[
     { x: "temperature", y: (Math.abs(temperature)*220)/60,radius:121,innerRadius:109},
     { x: "", y: 220-(Math.abs(temperature)*220)/60,radius:120,innerRadius:110}
