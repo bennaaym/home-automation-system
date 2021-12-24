@@ -6,6 +6,7 @@ import { AddUser } from '../screens/AddUser';
 import { ProfileAvatar } from '../utils/ProfileAvatar';
 import Room from '../screens/Room';
 import { Settings } from '../utils/Settings';
+import { QrPage } from '../screens/QRPage';
 
 
 const Stack = createStackNavigator();
@@ -16,6 +17,7 @@ const AppNavigationContainer = ({username}) => {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen options={{headerTitle: (props) => <ProfileAvatar {...props} />,headerRight: (props) => <Settings {...props} />}} name="Home" component={HomeScreen}/>
         <Stack.Screen options={{headerShown: false}} name="AddUser" component={AddUser} />
+        <Stack.Screen options={{headerShown: false}} name="QrCode" component={QrPage} />
         <Stack.Screen options={{headerTitle: "" ,headerRight: (props) => <Settings {...props} />}} name="Room" component={Room} />
       </Stack.Navigator>
     </NavigationContainer>

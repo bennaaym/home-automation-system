@@ -42,11 +42,13 @@ class FaceRecognizer:
             self.__tts = TTS.get_instance()
             self.__threads: List[Thread] = []
             self.counter = -1
+            self.__face_detected: str = ""
             FaceRecognizer.__instance = self
 
     # PUBLIC METHODS
     def reset(self) -> None:
         self.__is_running = True
+        self.__face_detected = ""
         self.__known_face_encodings = []
         self.__known_face_names = []
         self.counter = -1
@@ -74,6 +76,8 @@ class FaceRecognizer:
 
             cv2.imshow('FACE RECOGNITION', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+            if self.__face_detected == "unknown":
                 break
 
         cv2.destroyAllWindows()
@@ -144,3 +148,5 @@ class FaceRecognizer:
             self.__is_running = False
             self.counter = 10
             self.__tts.speak(f"{Messages.FACE_RECOGNIZED}, Hi! {name}")
+
+        self.__face_detected = name.lower()
